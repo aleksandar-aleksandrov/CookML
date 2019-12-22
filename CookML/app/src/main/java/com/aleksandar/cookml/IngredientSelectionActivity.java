@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.aleksandar.cookml.recommendation.classification.KNNClassifier;
+import com.aleksandar.cookml.recommendation.models.Ingredient;
+import com.aleksandar.cookml.recommendation.models.Prediction;
+import com.aleksandar.cookml.recommendation.models.Recipe;
+import com.aleksandar.cookml.recommendation.preprocessing.DataPreprocessor;
 
 import java.util.ArrayList;
 
@@ -82,6 +87,24 @@ public class IngredientSelectionActivity extends AppCompatActivity {
     }
 
     public void move() {
+        // Load the data
+        DataPreprocessor preprocessor = new DataPreprocessor();
+        ArrayList<Recipe> recipes = preprocessor.load();
+        ArrayList<double[]> vectors = new ArrayList<>();
+        for(Recipe recipe : recipes) {
+            vectors.add(preprocessor.toVector(recipe.ingredients));
+        }
+
+        // Create the classifier
+        KNNClassifier classifier = new KNNClassifier(3);
+
+        // Fit the classifier
+        classifier.fit((double[][]) vectors.toArray(), recipes);
+
+        // com.aleksandar.cookml.recommendation.models.Prediction
+        Ingredient[] ingredients = (Ingredient[]) new ArrayList<Ingredient>().toArray();
+        double[] vectorizedIngredients = preprocessor.toVector(ingredients);
+        ArrayList<Prediction> recommendedRecipes = classifier.predict(vectorizedIngredients);
         Intent myIntent = new Intent(this, RecipeRecomendationActivity.class);
         startActivity(myIntent);
     }
