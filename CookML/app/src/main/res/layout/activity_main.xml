@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:srcCompat="@drawable/background_4"
+                android:id="@+id/imageView2" android:contentDescription="@string/app_name"
+                tools:srcCompat="@drawable/background_4" android:scaleType="centerCrop"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:gravity="center|top" android:layout_marginTop="0dp">
+            <TextView
+                    android:text="Hungry?"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp" android:id="@+id/textView"
+                    android:textSize="@android:dimen/notification_large_icon_height"
+                    android:textColor="@android:color/background_light"
+                    android:layout_marginTop="10dp" android:textStyle="bold"
+                    android:gravity="center|top"
+                    android:fontFamily="sans-serif-condensed-light" android:visibility="visible"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:gravity="bottom|center">
+            <Button
+                    android:text="We can help!"
+                    android:layout_width="262dp"
+                    android:layout_height="wrap_content" android:id="@+id/button4"
+                    tools:background="#EBA943" android:background="#EBA943"
+                    android:textColor="@android:color/background_light" android:layout_margin="50dp"
+                    android:padding="@dimen/fab_margin" android:layout_marginBottom="@android:dimen/app_icon_size"
+                    android:onClick="startCooking"/>
+        </LinearLayout>
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
