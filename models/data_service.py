@@ -6,7 +6,6 @@ from matplotlib import pyplot as plt
 
 
 class DataService:
-
     def __init__(self, data_path: str = 'dataset', batch_size: int = 32, img_height: int = 224,
                      img_width: int = 224, img_extension: str = 'png'):
         self.data_path: Path = Path(os.getcwd()).joinpath(data_path)
