@@ -2,42 +2,68 @@ package com.aleksandar.cookml;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import com.aleksandar.cookml.recommendation.classification.KNNClassifier;
-import com.aleksandar.cookml.recommendation.models.Ingredient;
-import com.aleksandar.cookml.recommendation.models.Prediction;
-import com.aleksandar.cookml.recommendation.models.Recipe;
-import com.aleksandar.cookml.recommendation.preprocessing.DataPreprocessor;
+import com.aleksandar.cookml.cooking.CookingManager;
+import com.aleksandar.cookml.cooking.CookingManagerComponent;
+import com.aleksandar.cookml.models.CheckableIngredient;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 
 public class IngredientSelectionActivity extends AppCompatActivity {
-    public ArrayList<String> detectedIngredients = new ArrayList<>();
+    private ProgressBar progressBar;
+    private View background;
+    private Button cookButton;
+    private Button addButton;
+
+    @Inject
+    CookingManager cookingManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        detectedIngredients.add("c");
-        detectedIngredients.add("tomato");
-        detectedIngredients.add("cucumber");
 
         setContentView(R.layout.activity_ingredient_selection);
 
-        LinearLayout myRoot = (LinearLayout) findViewById(R.id.detectedLayout);
+        CookingManagerComponent component = ((CookMLApp) getApplication()).getCookingManagerComponent();
+        component.inject(this);
 
-        for(String i : detectedIngredients) {
-            CheckBox ch = new CheckBox(this);
-            ch.setText(i);
-            ch.setChecked(true);
-            myRoot.addView(ch);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        background = (View) findViewById(R.id.background_dim);
+        cookButton = (Button) findViewById(R.id.button2);
+        addButton = (Button) findViewById(R.id.button);
+
+        addCheckboxes(cookingManager.getIngredients());
+    }
+
+    private void addCheckBox(final CheckableIngredient ingredient) {
+        LinearLayout root = (LinearLayout) findViewById(R.id.detectedLayout);
+        addCheckbox(ingredient, root);
+    }
+
+    private void addCheckbox(final CheckableIngredient ingredient, LinearLayout root) {
+        CheckBox ch = new CheckBox(this);
+        ch.setText(ingredient.name);
+        ch.setChecked(ingredient.isChecked());
+        ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ingredient.toggle();
+            }
+        });
+        root.addView(ch);
+    }
+
+    private void addCheckboxes(final ArrayList<CheckableIngredient> ingredients) {
+        LinearLayout root = (LinearLayout) findViewById(R.id.detectedLayout);
+
+        for(final CheckableIngredient ingredient : ingredients) {
+            addCheckbox(ingredient, root);
         }
-
-        System.out.println(myRoot);
-
     }
 
     // from the link above
@@ -55,21 +81,13 @@ public class IngredientSelectionActivity extends AppCompatActivity {
     }
 
     public void addIngredient(View view) {
-        LinearLayout myRoot = (LinearLayout) findViewById(R.id.detectedLayout);
         AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-        CheckBox ch = new CheckBox(this);
-        System.out.println(view);
-        ch.setText(textView.getText());
-        ch.setChecked(true);
-        myRoot.addView(ch);
+        final CheckableIngredient ingredient = new CheckableIngredient(textView.getText().toString(), true);
+        addCheckBox(ingredient);
+        cookingManager.addCheckableIngredient(ingredient);
     }
 
     public void startSpinner(View view) {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        View background = (View) findViewById(R.id.background_dim);
-        Button cookButton = (Button) findViewById(R.id.button2);
-        Button addButton = (Button) findViewById(R.id.button);
-
         progressBar.setVisibility(View.VISIBLE);
         background.setVisibility(View.VISIBLE);
         cookButton.setClickable(false);
@@ -87,24 +105,12 @@ public class IngredientSelectionActivity extends AppCompatActivity {
     }
 
     public void move() {
-        // Load the data
-        DataPreprocessor preprocessor = new DataPreprocessor();
-        ArrayList<Recipe> recipes = preprocessor.load();
-        ArrayList<double[]> vectors = new ArrayList<>();
-        for(Recipe recipe : recipes) {
-            vectors.add(preprocessor.toVector(recipe.ingredients));
-        }
+        progressBar.setVisibility(View.INVISIBLE);
+        background.setVisibility(View.INVISIBLE);
+        cookButton.setClickable(true);
+        addButton.setClickable(true);
 
-        // Create the classifier
-        KNNClassifier classifier = new KNNClassifier(3);
-
-        // Fit the classifier
-        classifier.fit((double[][]) vectors.toArray(), recipes);
-
-        // com.aleksandar.cookml.recommendation.models.Prediction
-        Ingredient[] ingredients = (Ingredient[]) new ArrayList<Ingredient>().toArray();
-        double[] vectorizedIngredients = preprocessor.toVector(ingredients);
-        ArrayList<Prediction> recommendedRecipes = classifier.predict(vectorizedIngredients);
+        cookingManager.recommend();
         Intent myIntent = new Intent(this, RecipeRecomendationActivity.class);
         startActivity(myIntent);
     }

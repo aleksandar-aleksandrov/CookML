@@ -1,7 +1,7 @@
 package com.aleksandar.cookml.recommendation.classification;
 
-import com.aleksandar.cookml.recommendation.models.Prediction;
-import com.aleksandar.cookml.recommendation.models.Recipe;
+import com.aleksandar.cookml.models.Prediction;
+import com.aleksandar.cookml.models.Recipe;
 
 import java.util.ArrayList;
 import java.util.Collections;

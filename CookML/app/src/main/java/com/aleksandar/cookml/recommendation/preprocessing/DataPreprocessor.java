@@ -1,7 +1,7 @@
 package com.aleksandar.cookml.recommendation.preprocessing;
 
-import com.aleksandar.cookml.recommendation.models.Ingredient;
-import com.aleksandar.cookml.recommendation.models.Recipe;
+import com.aleksandar.cookml.models.Ingredient;
+import com.aleksandar.cookml.models.Recipe;
 
 import java.util.ArrayList;
 

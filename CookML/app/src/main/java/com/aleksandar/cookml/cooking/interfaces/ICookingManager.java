@@ -1,0 +1,19 @@
+package com.aleksandar.cookml.cooking.interfaces;
+
+import androidx.appcompat.app.AppCompatActivity;
+import com.aleksandar.cookml.models.CheckableIngredient;
+import com.aleksandar.cookml.models.Ingredient;
+import com.aleksandar.cookml.models.Recipe;
+
+import java.util.ArrayList;
+
+public interface ICookingManager {
+    ArrayList<CheckableIngredient> recognize(AppCompatActivity activity);
+
+    ArrayList<CheckableIngredient> getIngredients();
+    void addIngredient(Ingredient ingredient);
+
+    ArrayList<Recipe> recommend();
+
+    ArrayList<Recipe> getRecipes();
+}

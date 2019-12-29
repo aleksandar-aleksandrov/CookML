@@ -33,11 +33,11 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" android:gravity="bottom|center">
-            <Button
-                    android:text="We can help!"
+            <androidx.appcompat.widget.AppCompatButton
+                    android:text="@string/first_transition"
                     android:layout_width="262dp"
-                    android:layout_height="wrap_content" android:id="@+id/button4"
-                    tools:background="#EBA943" android:background="#EBA943"
+                    android:layout_height="wrap_content" android:id="@+id/transitionButton"
+                    tools:background="@color/colorYellow" android:background="@color/colorYellow"
                     android:textColor="@android:color/background_light" android:layout_margin="50dp"
                     android:padding="@dimen/fab_margin" android:layout_marginBottom="@android:dimen/app_icon_size"
                     android:onClick="startCooking"/>

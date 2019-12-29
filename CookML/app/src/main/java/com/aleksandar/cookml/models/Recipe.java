@@ -1,19 +1,22 @@
 package com.aleksandar.cookml.models;
 
 public class Recipe {
-    protected String Name;
-    protected String Description;
+    public String title;
+    public String category;
+    public float servings;
+    public Ingredient[] ingredients;
+    public String description;
 
-    public Recipe(String name, String description) {
-        Name = name;
-        Description = description;
+    public Recipe(String recipeTitle, String recipeCategory, float recipeServings, Ingredient[] recipeIngredients, String recipeDescription) {
+        title = recipeTitle;
+        category = recipeCategory;
+        servings = recipeServings;
+        ingredients = recipeIngredients;
+        description = recipeDescription;
     }
 
-    public String getDescription() {
-        return Description;
-    }
-
-    public String getName() {
-        return Name;
+    public Recipe(String recipeTitle, String recipeDescription) {
+        title = recipeTitle;
+        description = recipeDescription;
     }
 }

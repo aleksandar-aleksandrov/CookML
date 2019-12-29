@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+
+>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView2"
+                android:textColor="@color/vanDykeBrown" android:textFontWeight="@android:integer/config_longAnimTime"/>
+        <Space
+                android:layout_width="match_parent"
+                android:layout_height="100dp"/>
+        <ImageView android:id="@+id/generatedPhoto" android:layout_height="224dp" android:src="@drawable/background_4"
+                   android:layout_width="fill_parent"></ImageView>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:gravity="bottom">
+            <Button android:background="@color/ochre" android:textColor="@color/vanDykeBrown"
+                    android:id="@+id/button1" android:layout_width="130dp" android:layout_height="wrap_content"
+                    android:text="Make Photo" android:onClick="onClick"></Button>
+            <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_weight="1"/>
+            <Button android:background="@color/ochre" android:textColor="@color/vanDykeBrown"
+                    android:id="@+id/detectionButton" android:layout_width="130dp" android:layout_height="wrap_content"
+                    android:text="Detect" android:onClick="onTriggerDetection"></Button>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

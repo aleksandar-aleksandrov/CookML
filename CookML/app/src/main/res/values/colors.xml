@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorYellow">#EBA943</color>
+    <color name="pearl">#EDE3C7</color>
+    <color name="vanDykeBrown">#633729</color>
+    <color name="ochre">#CB6E2D</color>
 </resources>

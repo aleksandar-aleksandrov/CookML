@@ -1,35 +1,73 @@
 package com.aleksandar.cookml;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.aleksandar.cookml.cooking.CookingManager;
+import com.aleksandar.cookml.cooking.CookingManagerComponent;
+import com.aleksandar.cookml.models.CheckableIngredient;
 import com.aleksandar.cookml.models.Recipe;
 
-import java.util.ArrayList;
+import javax.inject.Inject;
 
 public class RecipeRecomendationActivity extends AppCompatActivity {
-    protected ArrayList<Recipe> recipes = new ArrayList<>();
+    @Inject
+    CookingManager cookingManager;
+
+    private Button nextButton;
+    private Button prevButton;
+    private TextView recipeDescriptionView;
+    private TextView recipeNameView;
+
+    private int currentIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        recipes.add(new Recipe("Mashed Potatoes", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   \n" +
-                "\n" +
-                "Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   \n" +
-                "\n" +
-                "Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.   \n" +
-                "\n" +
-                "Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.   \n" +
-                "\n" +
-                "Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.   \n" +
-                "\n" +
-                "At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur"));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_recomendation);
 
-        TextView recipeDescriptionView = (TextView) findViewById(R.id.recipeDescription);
-        recipeDescriptionView.setText(recipes.get(0).getDescription());
+        CookingManagerComponent component = ((CookMLApp) getApplication()).getCookingManagerComponent();
+        component.inject(this);
 
-        TextView recipeNameView = (TextView) findViewById(R.id.recipeName);
-        recipeNameView.setText(recipes.get(0).getName());
+        recipeDescriptionView = (TextView) findViewById(R.id.recipeDescription);
+        recipeNameView = (TextView) findViewById(R.id.recipeName);
+        nextButton = (Button) findViewById(R.id.next);
+        prevButton = (Button) findViewById(R.id.prev);
+
+        updateRecipeView(cookingManager.getRecipes().get(0));
+    }
+
+    public void updateRecipeView(Recipe recipe) {
+        recipeDescriptionView.setText(recipe.description);
+        recipeNameView.setText(recipe.title);
+    }
+
+    public void onNext(View view) {
+        currentIndex++;
+        System.out.println(currentIndex);
+        System.out.println(cookingManager.getRecipes().size());
+        if(currentIndex >= cookingManager.getRecipes().size() - 1) {
+            currentIndex = cookingManager.getRecipes().size() - 1;
+            //nextButton.setClickable(false);
+        }
+
+        //prevButton.setClickable(true);
+
+        updateRecipeView(cookingManager.getRecipes().get(currentIndex));
+    }
+
+    public void onPrev(View view) {
+        currentIndex--;
+
+        if(currentIndex <= 0) {
+            currentIndex = 0;
+            //prevButton.setClickable(false);
+        }
+
+        //nextButton.setClickable(true);
+
+        updateRecipeView(cookingManager.getRecipes().get(currentIndex));
     }
 }
