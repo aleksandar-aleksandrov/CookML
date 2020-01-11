@@ -1,7 +1,6 @@
 package com.aleksandar.cookml;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -47,6 +46,7 @@ public class IngredientSelectionActivity extends AppCompatActivity {
 
     private void addCheckbox(final CheckableIngredient ingredient, LinearLayout root) {
         CheckBox ch = new CheckBox(this);
+
         ch.setText(ingredient.name);
         ch.setChecked(ingredient.isChecked());
         ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -55,6 +55,7 @@ public class IngredientSelectionActivity extends AppCompatActivity {
                 ingredient.toggle();
             }
         });
+
         root.addView(ch);
     }
 
@@ -63,20 +64,6 @@ public class IngredientSelectionActivity extends AppCompatActivity {
 
         for(final CheckableIngredient ingredient : ingredients) {
             addCheckbox(ingredient, root);
-        }
-    }
-
-    // from the link above
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        System.out.println(newConfig);
-        // Checks whether a hardware keyboard is available
-        if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
-            Toast.makeText(this, "keyboard visible", Toast.LENGTH_SHORT).show();
-        } else if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
-            Toast.makeText(this, "keyboard hidden", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -108,7 +95,7 @@ public class IngredientSelectionActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
         background.setVisibility(View.INVISIBLE);
         cookButton.setClickable(true);
-        addButton.setClickable(true);
+        addButton.setClickable(true);;
 
         cookingManager.recommend();
         Intent myIntent = new Intent(this, RecipeRecomendationActivity.class);

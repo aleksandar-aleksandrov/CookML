@@ -10,26 +10,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <TextView
-                android:text="TextView"
+                android:text="Ingredient Recognition"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView2"
-                android:textColor="@color/vanDykeBrown" android:textFontWeight="@android:integer/config_longAnimTime"/>
+                android:layout_height="74dp" android:id="@+id/textView2"
+                android:textColor="@color/colorYellow" android:textFontWeight="@android:integer/config_longAnimTime"
+                android:textSize="30sp" android:gravity="center" android:textStyle="bold"/>
         <Space
                 android:layout_width="match_parent"
-                android:layout_height="100dp"/>
-        <ImageView android:id="@+id/generatedPhoto" android:layout_height="224dp" android:src="@drawable/background_4"
-                   android:layout_width="fill_parent"></ImageView>
+                android:layout_height="15dp"/>
+        <ImageView android:id="@+id/generatedPhoto" android:layout_height="473dp" android:src="@drawable/background_4"
+                   android:layout_width="fill_parent" android:scaleType="fitXY"></ImageView>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" android:gravity="bottom">
-            <Button android:background="@color/ochre" android:textColor="@color/vanDykeBrown"
+            <Button android:background="@color/colorYellow" android:textColor="@color/pearl"
                     android:id="@+id/button1" android:layout_width="130dp" android:layout_height="wrap_content"
                     android:text="Make Photo" android:onClick="onClick"></Button>
             <Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:layout_weight="1"/>
-            <Button android:background="@color/ochre" android:textColor="@color/vanDykeBrown"
+            <Button android:background="@color/colorYellow" android:textColor="@color/pearl"
                     android:id="@+id/detectionButton" android:layout_width="130dp" android:layout_height="wrap_content"
                     android:text="Detect" android:onClick="onTriggerDetection"></Button>
         </LinearLayout>

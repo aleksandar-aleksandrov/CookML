@@ -15,38 +15,44 @@
         <TextView
                 android:text="Detected ingredients"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:textSize="30sp" android:gravity="center"/>
+                android:layout_height="wrap_content" android:textSize="30sp" android:gravity="center"
+                android:textColor="@color/colorYellow" android:textStyle="bold"/>
         <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="400dp">
+                android:layout_height="250dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:orientation="vertical" android:id="@+id/detectedLayout">
             </LinearLayout>
         </ScrollView>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_marginTop="@dimen/fab_margin"
-                android:gravity="center">
-            <AutoCompleteTextView
-                    android:text="" android:layout_width="100dp"
-                    android:layout_height="45dp" android:id="@+id/autoCompleteTextView"
-                    android:layout_weight="1" android:gravity="center"/>
+        <LinearLayout android:orientation="vertical"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent" android:gravity="bottom">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="@dimen/fab_margin"
+                    android:gravity="bottom">
+                <AutoCompleteTextView
+                        android:text="" android:layout_width="100dp"
+                        android:layout_height="45dp" android:id="@+id/autoCompleteTextView"
+                        android:layout_weight="1" android:gravity="center"/>
+                <Button
+                        android:text="Add"
+                        android:layout_width="2dp"
+                        android:layout_height="wrap_content" android:id="@+id/button" android:layout_weight="1"
+                        tools:background="@color/colorYellow" android:background="@color/colorYellow"
+                        android:textColor="@android:color/background_light"
+                        android:onClick="addIngredient"/>
+            </LinearLayout>
             <Button
-                    android:text="Add"
-                    android:layout_width="2dp"
-                    android:layout_height="wrap_content" android:id="@+id/button" android:layout_weight="1"
+                    android:text="Let's Cook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/button2"
                     tools:background="@color/colorYellow" android:background="@color/colorYellow"
                     android:textColor="@android:color/background_light"
-                    android:onClick="addIngredient"/>
+                    android:layout_marginTop="30dp" android:onClick="startSpinner"/>
+
         </LinearLayout>
-        <Button
-                android:text="Let's Cook"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/button2"
-                tools:background="@color/colorYellow" android:background="@color/colorYellow"
-                android:textColor="@android:color/background_light"
-                android:layout_marginTop="30dp" android:onClick="startSpinner"/>
 
     </LinearLayout>
     <ProgressBar
@@ -58,10 +64,11 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
-<View
-        android:id="@+id/background_dim"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:background="#42000000"
-        android:visibility="invisible" />
+    <View
+            android:id="@+id/background_dim"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#42000000"
+            android:visibility="invisible"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

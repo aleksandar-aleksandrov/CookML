@@ -14,15 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import com.aleksandar.cookml.cooking.CookingManager;
 import com.aleksandar.cookml.cooking.CookingManagerComponent;
-import com.aleksandar.cookml.cooking.session.CookingSession;
-import com.aleksandar.cookml.models.CheckableIngredient;
-import com.aleksandar.cookml.tflite.Classifier;
-import com.aleksandar.cookml.tflite.ClassifierFloatMobileNet;
-import com.aleksandar.cookml.tflite.ClassifierQuantizedMobileNet;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.List;
 
 public class IngredientRecognitionActivity extends AppCompatActivity {
     @Inject
@@ -31,6 +25,7 @@ public class IngredientRecognitionActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 1;
+    private Bitmap bitmap = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,15 +48,18 @@ public class IngredientRecognitionActivity extends AppCompatActivity {
     }
 
     public void onTriggerDetection(View v) throws IOException {
-        cookingManager.recognize(this);
-
-        Intent nextIntent = new Intent(this, IngredientSelectionActivity.class);
-        startActivity(nextIntent);
+        // Add ingredients
+        if(bitmap == null) {
+            Toast.makeText(this, "Before proceeding, make a photo!", Toast.LENGTH_LONG).show();
+        } else {
+            cookingManager.recognize(this, bitmap);
+            Intent nextIntent = new Intent(this, IngredientSelectionActivity.class);
+            startActivity(nextIntent);
+        }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == MY_CAMERA_PERMISSION_CODE) {
             Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -76,22 +74,12 @@ public class IngredientRecognitionActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
-            photo = Bitmap.createScaledBitmap(photo, 224, 224, false);
-            try {
-                ClassifierQuantizedMobileNet clf = new ClassifierQuantizedMobileNet(this, Classifier.Device.CPU, 1);
-                List<Classifier.Recognition> recog = clf.recognizeImage(photo, 0);
-                for(Classifier.Recognition r : recog) {
-                    System.out.println(r.getTitle());
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
             imageView.setImageBitmap(photo);
+
+            bitmap = Bitmap.createScaledBitmap(photo, 224, 224, false);;
         }
     }
 }

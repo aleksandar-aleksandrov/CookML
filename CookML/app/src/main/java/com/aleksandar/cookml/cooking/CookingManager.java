@@ -1,5 +1,6 @@
 package com.aleksandar.cookml.cooking;
 
+import android.graphics.Bitmap;
 import androidx.appcompat.app.AppCompatActivity;
 import com.aleksandar.cookml.cooking.interfaces.ICookingManager;
 import com.aleksandar.cookml.cooking.recommendation.RecipeRecommender;
@@ -29,10 +30,10 @@ public class CookingManager implements ICookingManager {
     }
 
     @Override
-    public ArrayList<CheckableIngredient> recognize(AppCompatActivity activity) {
+    public ArrayList<CheckableIngredient> recognize(AppCompatActivity activity, Bitmap bitmap) {
         ArrayList<Ingredient> recognizedIngredients = null;
         try {
-            recognizedIngredients = recognizer.recognize(activity);
+            recognizedIngredients = recognizer.recognize(activity, bitmap);
             for(Ingredient e : recognizedIngredients) {
                 session.addNewIngredient(new CheckableIngredient(e.name, true));
             }
