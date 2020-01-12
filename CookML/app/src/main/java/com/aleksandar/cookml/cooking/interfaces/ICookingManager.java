@@ -14,7 +14,7 @@ public interface ICookingManager {
     ArrayList<CheckableIngredient> getIngredients();
     void addIngredient(Ingredient ingredient);
 
-    ArrayList<Recipe> recommend();
+    ArrayList<Recipe> recommend(AppCompatActivity activity);
 
     ArrayList<Recipe> getRecipes();
 }

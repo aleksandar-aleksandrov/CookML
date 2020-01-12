@@ -33,4 +33,8 @@ public class CookingSession {
     public ArrayList<CheckableIngredient> getIngredients() {
         return ingredients;
     }
+
+    public void clearRecipes() {
+        recommendedRecipes.clear();
+    }
 }

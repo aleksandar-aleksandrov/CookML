@@ -4,7 +4,8 @@ import com.aleksandar.cookml.models.Ingredient;
 import com.aleksandar.cookml.models.Recipe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IRecommender {
-    ArrayList<Recipe> recommend(ArrayList<Ingredient> ingredients);
+    List<Recipe> recommend(List<Ingredient> ingredients);
 }

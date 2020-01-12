@@ -22,7 +22,7 @@
                 android:textStyle="bold" android:gravity="center"/>
         <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="400dp">
+                android:layout_height="350dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:orientation="vertical">
                 <TextView
@@ -55,6 +55,6 @@
                 tools:background="@color/colorYellow" android:background="@color/colorYellow"
                 android:textColor="@android:color/background_light"
                 android:layout_height="wrap_content" android:id="@+id/next" android:layout_weight="1"
-                android:onClick="onPrev"/>
+                android:onClick="onNext"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

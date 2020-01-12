@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Singleton
 public class CookingManager implements ICookingManager {
@@ -56,7 +57,7 @@ public class CookingManager implements ICookingManager {
     }
 
     @Override
-    public ArrayList<Recipe> recommend() {
+    public ArrayList<Recipe> recommend(AppCompatActivity activity) {
         ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
         for(CheckableIngredient ingredient : getIngredients()) {
@@ -65,13 +66,13 @@ public class CookingManager implements ICookingManager {
             }
         }
 
-        ArrayList<Recipe> recipes = recommender.recommend(ingredients);
-
+        session.clearRecipes();
+        List<Recipe> recipes = recommender.recommend(activity.getAssets(), ingredients);
         for(Recipe recipe : recipes) {
             session.addRecommendedRecipe(recipe);
         }
 
-        return recipes;
+        return (ArrayList<Recipe>) recipes;
     }
 
     @Override

@@ -40,34 +40,38 @@ public class RecipeRecomendationActivity extends AppCompatActivity {
     }
 
     public void updateRecipeView(Recipe recipe) {
-        recipeDescriptionView.setText(recipe.description);
         recipeNameView.setText(recipe.title);
+
+        String text = "";
+        text += "Servings: " + recipe.servings + "\n";
+        text += "Categories: " + recipe.categories + "\n";
+        text += "Ingredients: " + recipe.ingredients + "\n\n\n";
+        text += recipe.description;
+        recipeDescriptionView.setText(text);
+
     }
 
     public void onNext(View view) {
-        currentIndex++;
-        System.out.println(currentIndex);
-        System.out.println(cookingManager.getRecipes().size());
+        currentIndex += 1;
         if(currentIndex >= cookingManager.getRecipes().size() - 1) {
             currentIndex = cookingManager.getRecipes().size() - 1;
-            //nextButton.setClickable(false);
+            nextButton.setClickable(false);
         }
 
-        //prevButton.setClickable(true);
+        prevButton.setClickable(true);
 
         updateRecipeView(cookingManager.getRecipes().get(currentIndex));
     }
 
     public void onPrev(View view) {
-        currentIndex--;
+        currentIndex -= 1;
 
         if(currentIndex <= 0) {
             currentIndex = 0;
-            //prevButton.setClickable(false);
+            prevButton.setClickable(false);
         }
 
-        //nextButton.setClickable(true);
-
+        nextButton.setClickable(true);
         updateRecipeView(cookingManager.getRecipes().get(currentIndex));
     }
 }

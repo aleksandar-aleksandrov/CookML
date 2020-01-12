@@ -97,7 +97,7 @@ public class IngredientSelectionActivity extends AppCompatActivity {
         cookButton.setClickable(true);
         addButton.setClickable(true);;
 
-        cookingManager.recommend();
+        cookingManager.recommend(this);
         Intent myIntent = new Intent(this, RecipeRecomendationActivity.class);
         startActivity(myIntent);
     }

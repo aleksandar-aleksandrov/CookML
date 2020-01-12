@@ -29,7 +29,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'com.google.android.material:material:1.0.0-beta01'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.10'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
@@ -37,4 +37,5 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite-support:0.0.0-nightly'
     implementation 'com.google.dagger:dagger:2.25.4'
     annotationProcessor "com.google.dagger:dagger-compiler:2.25.4"
+    implementation 'org.apache.opennlp:opennlp-tools:1.9.2'
 }
