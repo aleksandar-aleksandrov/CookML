@@ -17,6 +17,7 @@ import com.aleksandar.cookml.cooking.CookingManagerComponent;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class IngredientRecognitionActivity extends AppCompatActivity {
     @Inject
@@ -52,7 +53,12 @@ public class IngredientRecognitionActivity extends AppCompatActivity {
         if(bitmap == null) {
             Toast.makeText(this, "Before proceeding, make a photo!", Toast.LENGTH_LONG).show();
         } else {
+            long startTime = System.currentTimeMillis();
             cookingManager.recognize(this, bitmap);
+            long fullTime = System.currentTimeMillis() - startTime;
+
+            System.out.println(fullTime);
+
             Intent nextIntent = new Intent(this, IngredientSelectionActivity.class);
             startActivity(nextIntent);
         }

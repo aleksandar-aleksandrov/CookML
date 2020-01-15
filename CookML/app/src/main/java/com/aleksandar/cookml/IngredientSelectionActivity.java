@@ -72,32 +72,30 @@ public class IngredientSelectionActivity extends AppCompatActivity {
         final CheckableIngredient ingredient = new CheckableIngredient(textView.getText().toString(), true);
         addCheckBox(ingredient);
         cookingManager.addCheckableIngredient(ingredient);
+        textView.setText("");
     }
 
     public void startSpinner(View view) {
+        if(!cookingManager.atLeastOneCheckedIngredient()) {
+            Toast.makeText(this, "At least one of the ingredients should be checked!", Toast.LENGTH_LONG).show();
+        }
+
         progressBar.setVisibility(View.VISIBLE);
         background.setVisibility(View.VISIBLE);
         cookButton.setClickable(false);
         addButton.setClickable(false);
 
-        Runnable r = new Runnable() {
-            @Override
-            public void run(){
-                move();
-            }
-        };
+        long startTime = System.currentTimeMillis();
+        cookingManager.recommend(this);
+        long fulltime = System.currentTimeMillis() - startTime;
 
-        Handler h = new Handler();
-        h.postDelayed(r, 2000); // <-- the "1000" is the delay time in miliseconds.
-    }
+        System.out.println(fulltime);
 
-    public void move() {
         progressBar.setVisibility(View.INVISIBLE);
         background.setVisibility(View.INVISIBLE);
         cookButton.setClickable(true);
-        addButton.setClickable(true);;
+        addButton.setClickable(true);
 
-        cookingManager.recommend(this);
         Intent myIntent = new Intent(this, RecipeRecomendationActivity.class);
         startActivity(myIntent);
     }

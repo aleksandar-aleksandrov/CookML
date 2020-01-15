@@ -35,6 +35,7 @@ public class CookingManager implements ICookingManager {
         ArrayList<Ingredient> recognizedIngredients = null;
         try {
             recognizedIngredients = recognizer.recognize(activity, bitmap);
+            session.clearIngredients();
             for(Ingredient e : recognizedIngredients) {
                 session.addNewIngredient(new CheckableIngredient(e.name, true));
             }
@@ -82,5 +83,15 @@ public class CookingManager implements ICookingManager {
 
     public void addCheckableIngredient(CheckableIngredient ingredient) {
         session.addNewIngredient(ingredient);
+    }
+
+    public boolean atLeastOneCheckedIngredient() {
+        for(CheckableIngredient ingredient : session.getIngredients()) {
+            if(ingredient.isChecked()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -37,4 +37,6 @@ public class CookingSession {
     public void clearRecipes() {
         recommendedRecipes.clear();
     }
+
+    public void clearIngredients() { ingredients.clear(); }
 }

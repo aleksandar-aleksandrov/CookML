@@ -18,8 +18,8 @@ import java.util.*;
 import org.tensorflow.lite.Interpreter;
 
 public class YoloClassifier implements Classifier {
-  private static final float IMAGE_MEAN = 128.0f;
-  private static final float IMAGE_STD = 128.0f;
+  private static final float IMAGE_MEAN = 0.0f;
+  private static final float IMAGE_STD = 255.0f;
   private static final int S = 7;
   private static final int B = 1;
   private static final int C = 25;
@@ -99,7 +99,7 @@ public class YoloClassifier implements Classifier {
       }
 
 
-      float[][][][][] output = new float[1][S][S][B][C + 5 + 1];
+      float[][][][][] output = new float[1][S][S][B][C + 5];
       Map<Integer, Object> outputMap = new HashMap<>();
       outputMap.put(0, output);
       Trace.endSection();
