@@ -14,5 +14,5 @@ CookML is an Android mobile application which implements a recipe recommedation 
 - `CookML` - The actual Android application
 
 ## Credits
-The Jupyter Notebook reuses this YOLO implementation: https://github.com/experiencor/keras-yolo2
-Used photos: https://unsplash.com/photos/gILLi3SGFbw & https://unsplash.com/photos/oQvESMKUkzM
+- The Jupyter Notebook reuses this YOLO implementation: https://github.com/experiencor/keras-yolo2
+- Used photos: https://unsplash.com/photos/gILLi3SGFbw & https://unsplash.com/photos/oQvESMKUkzM
