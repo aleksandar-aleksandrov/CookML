@@ -1,4 +1,4 @@
-## CookML
+# CookML
 
 ![logo][assets/logo_big.png]
 
