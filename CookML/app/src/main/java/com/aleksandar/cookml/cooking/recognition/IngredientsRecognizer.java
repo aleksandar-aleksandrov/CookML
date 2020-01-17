@@ -18,9 +18,9 @@ public class IngredientsRecognizer implements IRecognizer {
     private YoloClassifier classifier = null;
 
     private static final String MODEL_FILE = "converted_model.tflite";
-    private static final String LABELS_FILE = "file:///android_asset/classes.txt";
+    private static final String LABELS_FILE = "classes.txt";
     private static final int INPUT_SIZE = 224;
-    private static final int N = 10;
+    private static final int N = 5;
 
     @Override
     public ArrayList<Ingredient> recognize(AppCompatActivity activity, Bitmap bitmap) throws IOException {
@@ -40,7 +40,7 @@ public class IngredientsRecognizer implements IRecognizer {
                 return 0;
             }
         }));
-        recognitions = recognitions.subList(0, 10);
+        recognitions = recognitions.subList(0, N);
         Collections.sort(recognitions, Collections.reverseOrder(new Comparator<Classifier.Recogniton>() {
             @Override
             public int compare(Classifier.Recogniton o1, Classifier.Recogniton o2) {
@@ -52,15 +52,15 @@ public class IngredientsRecognizer implements IRecognizer {
                 return 0;
             }
         }));
-        System.out.println(recognitions.size());
-        System.out.println("###############################################");
+
         ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+        ArrayList<String> ingredientNames = new ArrayList<>();
         for(int i = 0; i < N; i++) {
             Classifier.Recogniton recognition = recognitions.get(i);
-            System.out.println(recognition.className);
-            System.out.println(recognition.classPercentage);
-            System.out.println(recognition.confidence);
-            ingredients.add(new Ingredient(recognition.className));
+            if(!ingredientNames.contains(recognition.className)) {
+                ingredientNames.add(recognition.className);
+                ingredients.add(new Ingredient(recognition.className));
+            }
         }
 
         return ingredients;

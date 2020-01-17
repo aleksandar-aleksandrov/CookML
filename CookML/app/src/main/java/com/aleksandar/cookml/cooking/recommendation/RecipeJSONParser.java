@@ -31,8 +31,7 @@ public class RecipeJSONParser
 
     }
 
-    public static List<Recipe> parse(AssetManager assetManager, String fileName)
-    {
+    public static List<Recipe> parse(AssetManager assetManager, String fileName) {
         List<Recipe> recipes = new ArrayList<Recipe>();
 
         try {

@@ -50,12 +50,13 @@ public class RecipeRecommender implements IRecommender {
     @Override
     public List<Recipe> recommend(List<Ingredient> ingredients) {
         float[][] tfidf = new float[ingredients.size()][recipeCorpus.length];
-        float[] main_doc = new float[ingredients.size()];
+        float[] queryVector = new float[ingredients.size()];
 
+        // Calculate the TF-IDF values
         for(int i = 0; i < ingredients.size(); i++) {
             String ingredient = ingredients.get(i).name;
 
-            float all_occurences = 0;
+            float allOccurences = 0;
 
             for(int j = 0; j < recipeCorpus.length; j++) {
                 String document = recipeCorpus[j];
@@ -63,20 +64,21 @@ public class RecipeRecommender implements IRecommender {
                 int occurences = count(document, ingredient);
 
                 tfidf[i][j] = occurences * 1f / recipeSizes[j];
-                all_occurences += occurences;
+                allOccurences += occurences;
             }
 
             float idf = 0;
-            if(all_occurences > 0) {
-                idf = (float) Math.log(recipeCorpusSize / all_occurences);
+            if(allOccurences > 0) {
+                idf = (float) Math.log(recipeCorpusSize / allOccurences);
             }
-            main_doc[i] = (1f / ingredients.size()) * idf;
+            queryVector[i] = (1f / ingredients.size()) * idf;
             for(int j = 0; j < recipeSizes.length; j++) {
                 tfidf[i][j] = tfidf[i][j] * idf;
             }
         }
 
-        Map<Integer, Float> cosineDistances = calculateCosineDistances(tfidf, main_doc);
+        // Calculate the cosine distance between the queryVector and each recipe vector
+        Map<Integer, Float> cosineDistances = calculateCosineDistances(tfidf, queryVector);
         List<Integer> topN = getTopN(cosineDistances, N);
 
         ArrayList<Recipe> topRecipes = new ArrayList<Recipe>();
@@ -106,24 +108,24 @@ public class RecipeRecommender implements IRecommender {
         return (List) Arrays.asList(topN.toArray());
     }
 
-    private Map<Integer, Float> calculateCosineDistances(float[][] tfidf, float[] main_doc) {
+    private Map<Integer, Float> calculateCosineDistances(float[][] tfidf, float[] queryVector) {
         Map<Integer, Float> cosineDistances = new TreeMap<Integer, Float>();
 
         for(int j = 0; j < tfidf[0].length; j++) {
             float sum = 0f;
-            float sum_2 = 0f;
-            float sum_3 = 0f;
+            float sumRecipeVector = 0f;
+            float sumQueryVector = 0f;
             for(int i = 0; i < tfidf.length; i++) {
-                sum += tfidf[i][j]*main_doc[i];
-                sum_2 += (float) Math.pow(tfidf[i][j], 2);
-                sum_3 += (float) Math.pow(main_doc[i], 2);
+                sum += tfidf[i][j]*queryVector[i];
+                sumRecipeVector += (float) Math.pow(tfidf[i][j], 2);
+                sumQueryVector += (float) Math.pow(queryVector[i], 2);
             }
-            float cosine_distance = 0;
-            if(sum_2 > 0) {
-                cosine_distance = sum / ((float) Math.sqrt(sum_3) * (float) Math.sqrt(sum_2));
+            float cosineDistance = 0;
+            if(sumRecipeVector > 0) {
+                cosineDistance = sum / ((float) Math.sqrt(sumQueryVector) * (float) Math.sqrt(sumRecipeVector));
             }
 
-            cosineDistances.put(j, cosine_distance);
+            cosineDistances.put(j, cosineDistance);
         }
 
         return cosineDistances;

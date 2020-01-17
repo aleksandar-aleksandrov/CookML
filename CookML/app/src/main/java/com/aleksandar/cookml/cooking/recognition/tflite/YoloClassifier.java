@@ -20,7 +20,7 @@ import org.tensorflow.lite.Interpreter;
 public class YoloClassifier implements Classifier {
   private static final float IMAGE_MEAN = 0.0f;
   private static final float IMAGE_STD = 255.0f;
-  private static final int S = 7;
+  private static final int S = 4;
   private static final int B = 1;
   private static final int C = 25;
 
@@ -59,8 +59,7 @@ public class YoloClassifier implements Classifier {
 
   private void loadLabels(AssetManager assetManager, String labelFilename) throws IOException {
       InputStream labelsInput = null;
-      String actualFilename = labelFilename.split("file:///android_asset/")[1];
-      labelsInput = assetManager.open(actualFilename);
+      labelsInput = assetManager.open(labelFilename);
 
       BufferedReader br = null;
       br = new BufferedReader(new InputStreamReader(labelsInput));
