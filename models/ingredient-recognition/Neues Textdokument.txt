@@ -1,5 +1,0 @@
-model
-tflite model
-loss file
-loss diagram
-jupyter notebook

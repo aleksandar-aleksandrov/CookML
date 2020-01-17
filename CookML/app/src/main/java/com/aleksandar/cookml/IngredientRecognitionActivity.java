@@ -17,7 +17,7 @@ import com.aleksandar.cookml.cooking.CookingManagerComponent;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.ArrayList;
+
 
 public class IngredientRecognitionActivity extends AppCompatActivity {
     @Inject
