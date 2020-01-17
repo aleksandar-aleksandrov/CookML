@@ -1,6 +1,6 @@
 # CookML
 
-![logo][assets/logo_big.png]
+![logo](assets/logo_big.png)
 
 ## Description
 
