@@ -20,10 +20,10 @@ CookML is an Android mobile application which implements a recipe recommedation 
 2. Second possibility is to install the delivered apk in the `apk/release` folder directly on your mobile device.
 3. The third and easiest way to run the application is to go to the `Google Play Store` and download it directly to your mobile device. Your device should be running a version of Android of 7.1 or higher (API 25 or higher). The application can be found at https://play.google.com/store/apps/details?id=com.aleksandar.cookml
 
-### Where I can find the trained model?
+### Where can I find the trained model?
 - `models/ingredient-recognition/main-model` for the main model & `models/ingredient-recognition/tflite-model` for the TFLite version.
 
-### How was this model trained?
+### How was the model trained?
 - By using the Jupyter Notebook in `models/ingredient-recognition/jupyter-notebook`. Unless a GPU is available, I recommend Google Colab. However, even in Google Colab a single epoch might take as long as ~400 seconds. Because of that, the model was trained in the GCP (Google Cloud Platform) on a single NVIDIA Tesla K80 instance.
 
 ## Credits
