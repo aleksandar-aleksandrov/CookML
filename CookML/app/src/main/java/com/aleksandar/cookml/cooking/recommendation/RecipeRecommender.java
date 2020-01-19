@@ -4,7 +4,6 @@ import android.content.res.AssetManager;
 import com.aleksandar.cookml.cooking.recommendation.interfaces.IRecommender;
 import com.aleksandar.cookml.models.Ingredient;
 import com.aleksandar.cookml.models.Recipe;
-import opennlp.tools.tokenize.WhitespaceTokenizer;
 
 import java.util.*;
 
@@ -24,6 +23,32 @@ public class RecipeRecommender implements IRecommender {
         loadRecipes(assetManager);
     }
 
+    public int getTokensAmmount(String d) {
+        boolean inToken = false;
+        int tokensAmmount = 0;
+
+        //gather up potential tokens
+        int end = d.length();
+        for (int i = 0; i < end; i++) {
+            if (Character.isWhitespace(d.charAt(i))  ||
+                    Character.getType(d.charAt(i)) == Character.SPACE_SEPARATOR) {
+                if (inToken) {
+                    tokensAmmount += 1;
+                    inToken = false;
+                }
+            }
+            else {
+                inToken = true;
+            }
+        }
+
+        if (inToken) {
+            tokensAmmount += 1;
+        }
+
+        return tokensAmmount;
+    }
+
     private void loadRecipes(final AssetManager assetManager) {
         recipes = RecipeJSONParser.parse(assetManager, RECIPES_JSON);
 
@@ -33,7 +58,7 @@ public class RecipeRecommender implements IRecommender {
 
         for(int i = 0; i < recipeCorpus.length; i++) {
             recipeCorpus[i] = recipes.get(i).toString();
-            int doc_length = WhitespaceTokenizer.INSTANCE.tokenizePos(recipeCorpus[i]).length;
+            int doc_length = getTokensAmmount(recipeCorpus[i]);
             recipeCorpusSize += doc_length;
             recipeSizes[i] = doc_length;
         }

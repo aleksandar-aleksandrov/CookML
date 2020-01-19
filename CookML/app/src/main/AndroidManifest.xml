@@ -2,11 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.aleksandar.cookml">
 
-    <uses-feature android:name="android.hardware.camera2.CameraDevice" android:required="true" />
+    <uses-feature android:name="android.hardware.camera2.CameraDevice" android:required="false" />
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <supports-screens
+            android:smallScreens="true"
+            android:normalScreens="true"
+            android:largeScreens="true"
+            android:xlargeScreens="true"/>
     <application
             android:name=".CookMLApp"
             android:allowBackup="true"
