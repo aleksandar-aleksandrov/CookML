@@ -13,14 +13,6 @@ CookML is an Android mobile application which implements a recipe recommedation 
 - `models` - A trained YOLO model in the `.pb` format and `.tflite` format. In the `jupyter-notebook` subfolder, the notebook used for training the model can be found. In the `loss` subfolder, the loss during the training is saved.
 - `CookML` - The actual Android application
 
-## Credits
-- The Jupyter Notebook reuses this YOLO implementation: https://github.com/experiencor/keras-yolo2
-- Used photos: https://unsplash.com/photos/gILLi3SGFbw & https://unsplash.com/photos/oQvESMKUkzM
-
-## External Libraries
-- `TFLite`
-- `Dagger`
-
 ## How-tos
 
 ### How to run the application?
@@ -33,4 +25,11 @@ CookML is an Android mobile application which implements a recipe recommedation 
 
 ### How was this model trained?
 - By using the Jupyter Notebook in `models/ingredient-recognition/jupyter-notebook`. Unless a GPU is available, I recommend Google Colab. However, even in Google Colab a single epoch might take as long as ~400 seconds. Because of that, the model was trained in the GCP (Google Cloud Platform) on a single NVIDIA Tesla K80 instance.
-  
+
+## Credits
+- The Jupyter Notebook reuses this YOLO implementation: https://github.com/experiencor/keras-yolo2
+- Used photos: https://unsplash.com/photos/gILLi3SGFbw & https://unsplash.com/photos/oQvESMKUkzM
+
+## External Libraries
+- `TFLite`
+- `Dagger`
