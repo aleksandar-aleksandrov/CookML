@@ -26,6 +26,12 @@ CookML is an Android mobile application which implements a recipe recommedation 
 ### How was the model trained?
 - By using the Jupyter Notebook in `models/ingredient-recognition/jupyter-notebook`. Unless a GPU is available, I recommend Google Colab. However, even in Google Colab a single epoch might take as long as ~400 seconds. Because of that, the model was trained in the GCP (Google Cloud Platform) on a single NVIDIA Tesla K80 instance.
 
+### What python packages do I need?
+- All of the needed python packages are listed in the `requirements.txt` file.
+
+### How can I test the model?
+- Open the Jupyter Notebook and load all of the cells up to the `yolo_loss` method (the `yolo_loss` function should also be executed). Then, jump to the test the trained model section. And execute all of the cells. Changing the paths can allow you to test on new images.
+
 ## Credits
 - The Jupyter Notebook reuses this YOLO implementation: https://github.com/experiencor/keras-yolo2
 - Used photos: https://unsplash.com/photos/gILLi3SGFbw & https://unsplash.com/photos/oQvESMKUkzM
